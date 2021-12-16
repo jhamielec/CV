@@ -1,24 +1,22 @@
-import React, { Component} from "react";
+import React from "react";
 
-export class Section extends Component {
-    render() {
-      let type;
-      if (this.props.type===undefined) {type='text'}
-      else {type=this.props.type}
-      return (
-        <div>
-            <label htmlFor={this.props.name}>{this.props.name}   </label>
-            <input 
-              type={type}
-              id={this.props.name}
-              min={this.props.min}
-              max={this.props.max}
-              step={this.props.step}
-              />
-            
-          <br/>
-        </div>
-      )
-    }
+export function Section(props) {
+  let type;
+  if (props.type===undefined) {type='text'}
+  else {type=props.type}
+  return (
+    <div>
+        <label htmlFor={props.name}>{props.name}   </label>
+        <input 
+          type={type}
+          id={props.name}
+          min={props.min}
+          max={props.max}
+          step={props.step}
+          />
+        
+      <br/>
+    </div>
+  )
+}
   
-  }

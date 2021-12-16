@@ -1,83 +1,73 @@
-import React, { Component} from "react";
-import { isCompositeComponent } from "react-dom/test-utils";
+import React, {useState} from "react";
 import {Section} from './Section'
 
-export class Education extends Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-      }
-    }
+export function Education(props){
+    return (
+        <div id="education">
+        <div id='eduSection'>
+            <EduTemplate/>
+        </div>
+        </div>
+    )
 
-    render() {
-        return (
-            <div id='eduSection'>
-                <EduTemplate/>
-            </div>
-        )
-
-    }
 }
-class EduTemplate extends Component {
-    constructor(props) {
-        super(props)
-        this.state= {
-            name: '',
-            startDate: '',
-            endDate: '',
-            gpa: '',
-            major: '',
-            degree: ''
-        }
-    }
 
-    render() {
-        return (
-            <div id="SingleEdu">
-                <h1>Education</h1>
-                <Title className='eduTitle' name={this.state.name} startDate={this.state.startDate} endDate={this.state.endDate} editButton={this.editButton} major={this.state.major} gpa={this.state.gpa} degree={this.state.degree}/>
-                <form onSubmit={this.onSubmit} id='eduForm'>
-                <Section name='School'/>
-                <Section name='Major' />
-                <Section name='GPA' type='number' min='0' max='4' step='.01'/>
-                <Section name='Degree' />
-                <Section name='Start' type='date'/>
-                <Section id='endDate' name='End' type='date'/>
-                <button type="submit">
-                    Add Education
-                </button>
-                </form>
-            </div>
-        )
-    }
+function EduTemplate(){
+    const [name, setName]=useState('')
+    const [startDate, setStartDate]=useState('')
+    const [endDate, setEndDate]=useState('')
+    const [gpa, setGpa]=useState('')
+    const [major, setMajor]=useState('')
+    const [degree, setDegree]=useState('')
 
-    onSubmit = (e) =>{
+
+    return (
+    <div id="SingleEdu">
+        <h1>Education</h1>
+        <Title className='eduTitle' name={name} startDate={startDate} endDate={endDate} editButton={(e)=>editButton(e)} major={major} gpa={gpa} degree={degree}/>
+        <form onSubmit={(e)=>onSubmit(e)} id='eduForm'>
+        <Section name='School'/>
+        <Section name='Major' />
+        <Section name='GPA' type='number' min='0' max='4' step='.01'/>
+        <Section name='Degree' />
+        <Section name='Start' type='date'/>
+        <Section id='endDate' name='End' type='date'/>
+        <button type="submit">
+            Add Education
+        </button>
+        </form>
+    </div>)
+
+    function onSubmit(e){
         e.preventDefault();
         const parent=e.target.parentElement
-        this.setState({
-            name: parent.querySelector('#School').value,
-            startDate: parent.querySelector('#Start').value,
-            endDate: parent.querySelector('#End').value,
-            gpa: parent.querySelector('#GPA').value,
-            major: parent.querySelector('#Major').value,
-            degree: parent.querySelector('#Degree').value
-        })
+        setName(parent.querySelector('#School').value)
+        setStartDate(parent.querySelector('#Start').value)
+        setEndDate(parent.querySelector('#End').value)
+        setGpa(parent.querySelector('#GPA').value)
+        setMajor(parent.querySelector('#Major').value)
+        setDegree(parent.querySelector('#Degree').value)
         e.target.style.display='none'
         parent.querySelector('.eduTitle').style.display='block'
 
     }
 
+    function editButton(e) {
+        e.target.parentElement.style.display='none'
+        e.target.parentElement.parentElement.querySelector('#eduForm').style.display='block'
+    }
+
 }
 
-class Title extends Component {
-    render() {return (
-        <div className={this.props.className}>
-            <div>{this.props.name}</div>
-            <div>{this.props.major}</div>
-            <div>{this.props.gpa}</div>
-            <div>{this.props.degree}</div>
-            <div>{this.props.endDate}</div>
-            <div>{this.props.startDate}</div>
+function Title(props) {
+    return (
+        <div className={props.className}>
+            <div>{props.name}</div>
+            <div>{props.major}</div>
+            <div>{props.gpa}</div>
+            <div>{props.degree}</div>
+            <div>{props.startDate}</div>
+            <div>{props.endDate}</div>
+            <button onClick={props.editButton}>Edit</button>
         </div>
-    )}
-}
+)}
