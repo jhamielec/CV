@@ -12,7 +12,15 @@ code {
     monospace;
 }
 
-.title {
-  display: flex;
+#title {
+  display: none;
   justify-content: space-evenly;
 }
+
+#eduSection {
+  display:flex;
+}
+
+
+
+h1 {margin-bottom:3px;}
